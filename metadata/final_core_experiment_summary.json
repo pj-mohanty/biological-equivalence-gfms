@@ -1,0 +1,32 @@
+{
+  "status": "CORE EXPERIMENT COMPLETE",
+  "frozen_utc": "2026-08-17T19:41:15.315537+00:00",
+  "models": {
+    "Omni-DNA-20M": {
+      "model_id": "zehui127/Omni-DNA-20M",
+      "role": "primary pilot and structural model"
+    },
+    "Omni-DNA-116M": {
+      "model_id": "zehui127/Omni-DNA-116M",
+      "role": "same-family scale replication"
+    },
+    "NucEL-93M": {
+      "model_id": "FreakingPotato/NucEL",
+      "revision": "0c802982985e572d9dc0659b072a1ceb03c8000f",
+      "role": "cross-family replication"
+    }
+  },
+  "cohorts": {
+    "pilot_sources": 300,
+    "structural_sources": 100,
+    "cross_family_matched_sources": 91,
+    "paths_per_structural_source": 10,
+    "composition_depth": 3
+  },
+  "headline_result": "Protein-level biological-equivalence geometry is model-dependent. Omni-DNA-20M and Omni-DNA-116M show chance-level local equivalence retrieval and do not recover the expected synonymous preference, whereas NucEL-93M shows tighter synonymous geometry and above-chance equivalence retrieval on the same matched cohort.",
+  "cross_family_retrieval_accuracy": {
+    "Omni-DNA-20M": 0.4957265,
+    "Omni-DNA-116M": 0.5003663,
+    "NucEL-93M": 0.5964591
+  }
+}

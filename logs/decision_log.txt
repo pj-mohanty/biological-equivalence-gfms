@@ -1,0 +1,21 @@
+D001: Clean CDSs restricted to conventional nuclear protein-coding CDSs using the standard genetic code.
+D002: Exact duplicate CDS sequences removed before sampling.
+D003: Final sequence eligibility determined using actual Omni-DNA tokenizer length.
+D004: Every synonymous variant validated by full-CDS retranslation.
+D005: Composition paths use distinct codon sites at depths 1, 2, and 3.
+D006: Nonsynonymous controls match codon position and per-step nucleotide Hamming distance.
+D007: Omni-DNA eligibility uses actual tokenizer length with a 250-token context.
+D008: No truncation permitted.
+D009: Transformers 4.48.3 used because Transformers 5.13.1 was incompatible with Omni-DNA custom model loading.
+D010: Primary representation fixed as final hidden-state mean pooling over non-special biological tokens.
+D011: All generated variants independently checked for context eligibility.
+D012: Smoke-test CDSs used context headroom only for pipeline validation.
+D013: Smoke-test distances treated as diagnostic only.
+D014: Primary pilot uses at most one CDS per Ensembl gene.
+D015: Primary pilot requires CDS length >= 300 nt.
+D016: Primary pilot size fixed at N=300 before full-pilot distance analysis.
+D017: All 300 synonymous composition paths completed with no exclusions.
+D018: Actual nucleotide edit distance retained as an explicit diagnostic variable.
+D019: All 900 nonsynonymous observations are exactly edit-matched to synonymous counterparts.
+D020: Full inference batch size fixed at 32 after GPU-memory validation.
+D021: Difference-in-differences does not support faster synonymous-specific drift across depth.

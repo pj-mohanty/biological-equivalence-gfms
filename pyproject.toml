@@ -1,0 +1,34 @@
+# ---------------------------------------------------------------------------
+# Tooling configuration for code ADDED to this repository (tests/, scripts/).
+#
+# This project is not packaged or installable: the research pipeline lives in
+# synonymous_composition.ipynb, which is a frozen artifact. No formatter,
+# linter or notebook-processing tool configured here touches the notebook.
+# ---------------------------------------------------------------------------
+
+[tool.ruff]
+# Linting is scoped to newly added code only.
+include = ["tests/**/*.py", "scripts/**/*.py"]
+extend-exclude = ["*.ipynb"]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.isort]
+# tests/ import shared helpers from conftest.py, which pytest places on
+# sys.path; classify it as first-party so import grouping is stable.
+known-first-party = ["conftest"]
+
+[tool.ruff.format]
+exclude = ["*.ipynb"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "requires_torch: test needs torch to read .pt embedding tensors",
+    "requires_large_artifacts: test needs files excluded from version control",
+]

@@ -1,0 +1,46 @@
+# ---------------------------------------------------------------------------
+# Large regenerable research artifacts
+# ---------------------------------------------------------------------------
+# These files are NOT deleted from your working copy. They are excluded from
+# version control because they exceed GitHub's 100 MB per-file hard limit and
+# are deterministic derivations of inputs whose provenance is already recorded.
+#
+#   data/raw/Homo_sapiens.GRCh38.cds.all.fa.gz          (37 MB)
+#       Downloadable from Ensembl. SHA-256 recorded in
+#       metadata/source_metadata.json and verifiable after download.
+#
+#   data/processed/validated_cds_candidates.csv          (344 MB)
+#   data/processed/validated_cds_candidates_with_token_lengths.csv (345 MB)
+#       Produced from the FASTA above by notebook cells 21 and 48.
+#
+# See docs/reproducibility.md for how to regenerate them.
+data/raw/*.fa.gz
+data/raw/*.fa
+data/processed/validated_cds_candidates.csv
+data/processed/validated_cds_candidates_with_token_lengths.csv
+
+# ---------------------------------------------------------------------------
+# Everything else under data/, embeddings/, figures/, logs/, metadata/ and
+# results/ is intentionally tracked. Do not add blanket ignores for those
+# directories: they hold the primary research artifacts of this study.
+# ---------------------------------------------------------------------------
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Notebook checkpoints (must never shadow the frozen notebook)
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

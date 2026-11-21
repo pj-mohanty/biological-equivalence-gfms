@@ -1,0 +1,23 @@
+# ---------------------------------------------------------------------------
+# CPU-only environment for validating the artifacts in this repository.
+#
+#   pip install -r requirements-validation.txt
+#   pytest -q
+#
+# This installs no model weights and runs no GPU work. It is the environment
+# used by .github/workflows/validate.yml.
+# ---------------------------------------------------------------------------
+pandas>=2.0
+numpy>=1.24
+PyYAML>=6.0
+pytest>=7.0
+
+# Optional: install torch (CPU build is sufficient) to additionally validate
+# the .pt embedding tensors against their metadata tables. Tests that need it
+# are skipped automatically when torch is absent.
+# torch>=2.0
+
+# Optional: linting for code added to this repository (tests/, scripts/).
+# Pinned to the version used by .github/workflows/validate.yml.
+#   pip install ruff==0.8.6 && ruff check tests scripts
+# ruff==0.8.6

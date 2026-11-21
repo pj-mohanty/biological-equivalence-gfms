@@ -1,0 +1,33 @@
+{
+  "analysis_label": "PRE-SPECIFIED PILOT",
+  "model_id": "zehui127/Omni-DNA-20M",
+  "model_class": "OLMoForCausalLM",
+  "model_commit_hash": "3b64e6a5ed6c8f72bad76823ce728b3045243026",
+  "tokenizer_class": "PreTrainedTokenizerFast",
+  "tokenizer_commit_hash": null,
+  "model_context_tokens": 250,
+  "embedding_dimension": 256,
+  "representation": "Final hidden-state mean pooling over attention-valid non-special biological tokens",
+  "primary_distance": "cosine_distance",
+  "seed": 42,
+  "n_source_sequences": 300,
+  "composition_depths": [
+    1,
+    2,
+    3
+  ],
+  "bootstrap_resamples": 10000,
+  "bootstrap_unit": "source_sequence",
+  "python_version": "3.12.13",
+  "platform": "Linux-6.6.122+-x86_64-with-glibc2.35",
+  "torch_version": "2.11.0+cu128",
+  "transformers_version": "4.48.3",
+  "tokenizers_version": "0.21.0",
+  "datasets_version": "4.0.0",
+  "numpy_version": "2.5.2",
+  "pandas_version": "2.2.3",
+  "cuda_available": true,
+  "gpu_name": "Tesla T4",
+  "allow_truncation": false,
+  "created_utc": "2026-08-17T18:36:32.552361+00:00"
+}

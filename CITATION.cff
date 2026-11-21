@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: >-
+  If you use this repository or its artifacts, please cite it as below.
+title: >-
+  Beyond Perturbation Robustness: Do Genomic Foundation Models Learn
+  Biological Equivalence?
+abstract: >-
+  Code, frozen sequence cohorts, embeddings, statistical results and figures
+  for an evaluation of whether genomic foundation models represent
+  synonymous (protein-preserving) coding-DNA edits differently from
+  edit-matched nonsynonymous controls. Four models are evaluated on nested
+  human CDS cohorts: Omni-DNA-20M, Omni-DNA-116M, NucEL-93M and
+  JEPA-DNA-NTv3-100M.
+type: software
+authors:
+  # Author name and affiliation supplied by the repository owner, subject to
+  # final verification before public release. No ORCID is recorded because
+  # none has been provided; the field is omitted rather than guessed.
+  - family-names: Mohanty
+    given-names: Padmaja
+    affiliation: University of San Francisco
+repository-code: 'https://github.com/pj-mohanty/biological-equivalence-gfms'
+# Code is MIT; data and derived artifacts are CC BY 4.0. See LICENSE and
+# LICENSE-DATA.md.
+license:
+  - MIT
+  - CC-BY-4.0
+license-url: 'https://github.com/pj-mohanty/biological-equivalence-gfms/blob/main/LICENSE'
+keywords:
+  - genomic foundation models
+  - biological equivalence
+  - synonymous variants
+  - representation geometry
+  - DNA language models
+  - model evaluation
+# TODO (author): once the accompanying paper has a citable record (venue,
+# year, DOI or arXiv identifier), add a `preferred-citation:` block here so
+# that citation tooling points at the paper rather than at the repository.
+# It is intentionally omitted rather than filled with placeholder values.

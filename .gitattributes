@@ -1,0 +1,25 @@
+# Research artifacts are byte-exact records. Disable all end-of-line
+# normalisation for them so that checkout/commit cannot alter their contents.
+*.ipynb   -text linguist-documentation
+*.csv     -text
+*.json    -text
+*.txt     -text
+
+# Binary artifacts
+*.pt      binary
+*.gz      binary
+*.png     binary
+*.pdf     binary
+
+# Repository source files use LF
+*.md      text eol=lf
+*.py      text eol=lf
+*.yml     text eol=lf
+*.yaml    text eol=lf
+*.toml    text eol=lf
+*.cff     text eol=lf
+
+# Keep generated artifacts out of GitHub language statistics
+data/**      linguist-generated
+embeddings/** linguist-generated
+results/**   linguist-generated

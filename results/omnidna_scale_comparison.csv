@@ -1,0 +1,11 @@
+model,experiment,metric,estimate,ci95_low,ci95_high,reference
+Omni-DNA-20M,multiple_path_consistency,syn_minus_non_endpoint_dispersion,0.0001739876402748,-0.0001126380761464,0.0004564069648583,0.0
+Omni-DNA-20M,equivalence_class_geometry,original_margin_non_minus_syn,-0.0002028185129165,-0.0003474440097808,-6.444869041442877e-05,0.0
+Omni-DNA-20M,equivalence_class_geometry,pairwise_margin_non_minus_syn,-0.0001739876402748,-0.0004646014177136,0.000125088267525,0.0
+Omni-DNA-20M,equivalence_retrieval,equivalence_retrieval_accuracy,0.4973333333333333,0.4791111111111111,0.515888888888889,0.5
+Omni-DNA-20M,equivalence_retrieval,semantic_margin_non_minus_syn,-5.267368422614213e-06,-0.0001517665275269,0.0001563147018353,0.0
+Omni-DNA-116M,multiple_path_consistency,syn_minus_non_endpoint_dispersion,1.4171746042039656e-05,-8.435070514678949e-07,2.943696942594315e-05,0.0
+Omni-DNA-116M,equivalence_class_geometry,original_margin_non_minus_syn,-1.869606971740723e-05,-2.710617929697037e-05,-1.1008654534816745e-05,0.0
+Omni-DNA-116M,equivalence_class_geometry,pairwise_margin_non_minus_syn,-1.4171746042039656e-05,-2.951547933949365e-05,5.763689676920558e-07,0.0
+Omni-DNA-116M,equivalence_retrieval,equivalence_retrieval_accuracy,0.5062222222222221,0.4824444444444444,0.5304444444444445,0.5
+Omni-DNA-116M,equivalence_retrieval,semantic_margin_non_minus_syn,3.182755576239702e-07,-8.63505138291253e-06,9.366936981678008e-06,0.0

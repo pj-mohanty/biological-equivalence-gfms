@@ -1,0 +1,159 @@
+# ---------------------------------------------------------------------------
+# Consolidated, machine-readable record of the experimental configuration.
+#
+# This file is DESCRIPTIVE, not prescriptive: it records what was actually run,
+# transcribed from the frozen artifacts in metadata/ and from constants in
+# synonymous_composition.ipynb. It does not drive execution.
+#
+# tests/test_config_matches_metadata.py asserts that every field duplicated
+# from metadata/*.json still matches its source, so this file cannot silently
+# drift away from the recorded experiment.
+# ---------------------------------------------------------------------------
+
+study:
+  title: >-
+    Beyond Perturbation Robustness: Do Genomic Foundation Models Learn
+    Biological Equivalence?
+  analysis_label: PRE-SPECIFIED PILOT        # metadata/pilot_design.json
+  notebook: synonymous_composition.ipynb
+  notebook_sha256: 660a5f37c539a01aba356e5f8f3b109276f2b0716f8eb7e203105e78d41f6334
+
+reproducibility:
+  seed: 42                                   # metadata/pilot_design.json
+  bootstrap_resamples: 10000
+  bootstrap_unit: source_sequence
+  allow_truncation: false
+
+data_source:
+  database: Ensembl                          # metadata/source_metadata.json
+  organism: Homo sapiens
+  assembly: GRCh38
+  file_name: Homo_sapiens.GRCh38.cds.all.fa.gz
+  download_url: https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz
+  sha256: f8c6731e185957e29816a8a38ce21dc61ef6c3fc4963fbb9c0cdd8ebd20f1342
+  # NOTE: the Ensembl `current_fasta` URL always serves the newest release and
+  # will NOT return this exact file once Ensembl advances a release. Verify the
+  # SHA-256 after download; see docs/reproducibility.md.
+
+cohorts:
+  # Strictly nested: cross_family_91 subset of structural_100 subset of pilot_300.
+  pilot_300:
+    n_sources: 300
+    one_cds_per_gene: true
+    minimum_cds_nt_length: 300
+    maximum_original_omnidna_token_length: 245
+    composition_depths: [1, 2, 3]
+    paths_per_source: 1
+    source_table: data/processed/original_sequences.csv
+  structural_100:
+    n_sources: 100
+    paths_per_source: 10
+    composition_depth: 3
+    source_table: data/processed/structural_extension_sources.csv
+  cross_family_91:
+    n_sources: 91
+    paths_per_source: 10
+    composition_depth: 3
+    rationale: >-
+      Sources from structural_100 whose sequences satisfy the context limits of
+      every evaluated model family, enabling matched cross-model comparison.
+    source_table: data/processed/cross_family_sources_91.csv
+
+representation:
+  primary_distance: cosine_distance
+  omni_dna_and_nucel: >-
+    Final hidden-state mean pooling over attention-valid, non-special
+    biological tokens.
+  jepa_dna: >-
+    Official sequence representative returned by
+    NTv3.infer_sequence_to_sequence_representative (recorded in the embedding
+    metadata as final_hidden_state_masked_mean).
+
+models:
+  - name: Omni-DNA-20M
+    hf_id: zehui127/Omni-DNA-20M
+    revision: 3b64e6a5ed6c8f72bad76823ce728b3045243026
+    model_class: OLMoForCausalLM
+    embedding_dimension: 256
+    context_tokens: 250
+    role: primary pilot and structural model
+    cohorts: [pilot_300, structural_100, cross_family_91]
+  - name: Omni-DNA-116M
+    hf_id: zehui127/Omni-DNA-116M
+    revision: 8a602a8324e1c29aff91112a7b78cad841d4c9d5
+    embedding_dimension: 768
+    role: same-family scale replication
+    cohorts: [structural_100, cross_family_91]
+  - name: NucEL-93M
+    hf_id: FreakingPotato/NucEL
+    revision: 0c802982985e572d9dc0659b072a1ceb03c8000f
+    embedding_dimension: 512
+    role: cross-family replication
+    cohorts: [cross_family_91]
+  - name: JEPA-DNA-NTv3-100M
+    hf_id: nvidia/NV-JEPA-DNA-NTv3
+    revision: be526df5438b375223017051b1a36d8b9dee2f59
+    embedding_dimension: 768
+    gated: true
+    implementation_repo: https://github.com/NVIDIA-Digital-Bio/JEPA-DNA.git
+    implementation_commit: 99e443341646e7cce3663f6a5a333cf421f24061
+    # The JEPA checkpoint is applied on top of an NTv3 backbone that comes from
+    # TWO distinct Hugging Face repositories. Both revisions below are recorded
+    # in the artifacts and refer to different repositories; they are not
+    # alternative values for the same thing.
+    ntv3_base_weights_repo: InstaDeepAI/NTv3_100M_pre        # gated backbone weights
+    ntv3_base_weights_revision: 5c685dca15891f5c5b80e0c930e23b87a217e441
+    # ^ returned by model_info(NTv3_100M_pre) in notebook cell 138 and written
+    #   to the ntv3_base_revision column of the JEPA embedding metadata (cell 149).
+    ntv3_code_repo: InstaDeepAI/ntv3_base_model               # custom modelling code
+    ntv3_code_revision: 0ecff3637f0d3ba5b686d1095083218157c2ca34
+    # ^ resolved in cell 140 and recorded in metadata/ntv3_base_code_revision.txt.
+    role: cross-family replication (JEPA objective)
+    cohorts: [cross_family_91]
+
+downstream_probe:
+  # The REPORTED probe is the stable refit (notebook cells 124 and 152), not the
+  # first-pass probe of cell 123. See `superseded_probe` below.
+  target: 20-dimensional amino-acid composition of the translated CDS
+  estimator: >-
+    scikit-learn Pipeline(StandardScaler, Ridge(solver="svd")) on float64
+    embeddings
+  outer_cv_folds: 5
+  inner_cv_folds: 4
+  alpha_grid: [0.01, 0.1, 1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 10000000.0]
+  split_unit: source sequence (folds assigned over the 91 original sources)
+  predictions_artifact: results/protein_semantic_probe_predictions_stable.csv
+  hyperparameters_artifact: metadata/protein_semantic_probe_hyperparameters_stable.csv
+  note: >-
+    Probes are fitted on original sequences only; transformed variants are used
+    exclusively at prediction time to measure prediction instability.
+
+  superseded_probe:
+    # Retained in the repository for transparency; NOT the basis of any
+    # reported number. Confirmed by recomputation: the reported
+    # results/protein_semantic_probe_prediction_changes.csv reproduces from the
+    # stable predictions to ~7e-16 and from these predictions only to ~8e-02.
+    producing_cell: 123
+    alpha_grid: [0.0001, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0]
+    predictions_artifact: results/protein_semantic_probe_predictions.csv
+    hyperparameters_artifact: metadata/protein_semantic_probe_hyperparameters.csv
+    reason_superseded: >-
+      Every one of the 15 folds selected alpha = 100.0, the maximum of this
+      grid, so the regularisation search was saturated at its boundary. Cell
+      124 refit with a wider grid (1e-2 to 1e7) in float64 with the SVD solver;
+      selected alphas then land in the interior of the grid (100.0 and 1000.0).
+
+environment_as_recorded:
+  # Transcribed verbatim from metadata/experiment_metadata.json at freeze time.
+  # See docs/reproducibility.md for a discrepancy with the pins in notebook
+  # cell 3 (numpy==2.2.6), which was superseded by later runtime state.
+  python: 3.12.13
+  platform: Linux-6.6.122+-x86_64-with-glibc2.35
+  torch: 2.11.0+cu128
+  transformers: 4.48.3
+  tokenizers: 0.21.0
+  datasets: 4.0.0
+  numpy: 2.5.2
+  pandas: 2.2.3
+  gpu: Tesla T4
+  cuda_available: true

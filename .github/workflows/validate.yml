@@ -1,0 +1,74 @@
+name: Validate artifacts
+
+# CPU-only validation of the research artifacts committed to this repository.
+# This workflow never downloads a model checkpoint, never uses a GPU, and never
+# modifies synonymous_composition.ipynb — it only reads and checks.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Artifact validation (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-validation.txt
+
+      # torch is intentionally not installed: tests that read the .pt embedding
+      # tensors skip automatically, keeping CI light and GPU-free.
+      - name: Run validation suite
+        run: pytest -q
+
+      - name: Verify artifact integrity
+        run: python scripts/verify_artifacts.py
+
+      - name: Check the artifact manifest is current
+        run: python scripts/make_manifest.py --check
+
+      # Also asserted by tests/test_notebook_untouched.py; repeated here as an
+      # explicit, visible guard on the frozen experiment record.
+      - name: Confirm the frozen notebook is unmodified
+        run: |
+          echo "660a5f37c539a01aba356e5f8f3b109276f2b0716f8eb7e203105e78d41f6334  synonymous_composition.ipynb" | sha256sum --check --strict
+
+  lint:
+    name: Lint added code
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Scoped by pyproject.toml to tests/ and scripts/ only. No formatter or
+      # notebook-processing tool is permitted to rewrite the frozen notebook.
+      - name: Install ruff
+        run: pip install ruff==0.8.6
+
+      - name: Lint
+        run: ruff check tests scripts

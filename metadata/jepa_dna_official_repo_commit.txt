@@ -1,0 +1,4 @@
+repository=https://github.com/NVIDIA-Digital-Bio/JEPA-DNA.git
+commit=99e443341646e7cce3663f6a5a333cf421f24061
+hf_model=nvidia/NV-JEPA-DNA-NTv3
+hf_revision=be526df5438b375223017051b1a36d8b9dee2f59

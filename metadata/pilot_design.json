@@ -1,0 +1,22 @@
+{
+  "analysis_label": "PRE-SPECIFIED PILOT",
+  "seed": 42,
+  "n_source_sequences": 300,
+  "organism": "Homo sapiens",
+  "assembly": "GRCh38",
+  "source": "Ensembl",
+  "one_cds_per_gene": true,
+  "minimum_cds_nt_length": 300,
+  "maximum_original_omnidna_token_length": 245,
+  "absolute_model_context_limit": 250,
+  "allow_truncation": false,
+  "composition_depths": [
+    1,
+    2,
+    3
+  ],
+  "primary_model": "zehui127/Omni-DNA-20M",
+  "primary_distance": "cosine_distance",
+  "bootstrap_unit": "source_sequence",
+  "bootstrap_resamples": 10000
+}

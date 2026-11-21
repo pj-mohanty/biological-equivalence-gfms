@@ -1,0 +1,10 @@
+{
+  "source": "Ensembl",
+  "organism": "Homo sapiens",
+  "assembly": "GRCh38",
+  "file_name": "Homo_sapiens.GRCh38.cds.all.fa.gz",
+  "download_url": "https://ftp.ensembl.org/pub/current_fasta/homo_sapiens/cds/Homo_sapiens.GRCh38.cds.all.fa.gz",
+  "local_path": "/content/drive/MyDrive/wiml_equivalence/data/raw/Homo_sapiens.GRCh38.cds.all.fa.gz",
+  "file_size_mb": 35.23,
+  "sha256": "f8c6731e185957e29816a8a38ce21dc61ef6c3fc4963fbb9c0cdd8ebd20f1342"
+}

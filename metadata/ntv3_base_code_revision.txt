@@ -1,0 +1,3 @@
+repo=InstaDeepAI/ntv3_base_model
+revision=0ecff3637f0d3ba5b686d1095083218157c2ca34
+local_snapshot=/root/.cache/huggingface/hub/models--InstaDeepAI--ntv3_base_model/snapshots/0ecff3637f0d3ba5b686d1095083218157c2ca34

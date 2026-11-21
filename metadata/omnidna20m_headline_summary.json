@@ -1,0 +1,14 @@
+{
+  "model_id": "zehui127/Omni-DNA-20M",
+  "pilot_sources": 300,
+  "structural_extension_sources": 100,
+  "structural_paths_per_source": 10,
+  "main_findings": {
+    "synonymous_drift_increases_with_depth": true,
+    "nonsynonymous_drift_also_increases_with_depth": true,
+    "synonymous_specific_acceleration_supported": false,
+    "synonymous_endpoint_classes_tighter_than_nonsynonymous": false,
+    "equivalent_retrieval_above_chance": false
+  },
+  "interpretation": "Omni-DNA-20M shows systematic representation drift under composed synonymous transformations, but matched nonsynonymous transformations show nearly parallel drift. In structural tests, protein-preserving variants do not form a reliably tighter representation neighborhood, and local equivalence retrieval is indistinguishable from chance."
+}

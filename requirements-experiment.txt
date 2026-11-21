@@ -1,0 +1,37 @@
+# ---------------------------------------------------------------------------
+# Environment used to PRODUCE the artifacts in this repository.
+#
+# Transcribed from metadata/experiment_metadata.json (recorded at freeze time,
+# 2026-08-17) and from the pip pins in synonymous_composition.ipynb.
+# This file is a RECORD, not a tested installation recipe: the experiments ran
+# on Google Colab with a Tesla T4 and required two runtime restarts, so a clean
+# `pip install -r` has not been validated end to end. See docs/reproducibility.md.
+#
+# Python 3.12.13 | Linux-6.6.122+-x86_64-with-glibc2.35 | Tesla T4 | CUDA
+# ---------------------------------------------------------------------------
+
+# Core modelling stack. transformers is pinned to 4.x deliberately: decision
+# D009 records that transformers 5.13.1 was incompatible with Omni-DNA's
+# custom model loading.
+torch==2.11.0           # recorded as 2.11.0+cu128 (CUDA 12.8 build)
+transformers==4.48.3
+tokenizers==0.21.0
+huggingface-hub==0.28.1
+ai2-olmo                # provides `olmo`, required by Omni-DNA's custom code;
+                        # version not recorded in the frozen metadata
+
+# Data / numerics. NOTE: notebook cell 3 pins numpy==2.2.6 and pyarrow==19.0.1,
+# but metadata/experiment_metadata.json records numpy 2.5.2 at freeze time,
+# after later installs changed the runtime. Both values are reported in
+# docs/reproducibility.md; neither has been silently reconciled.
+numpy==2.5.2
+pandas==2.2.3
+pyarrow==19.0.1
+datasets==4.0.0
+scipy
+scikit-learn
+
+# Figures and utilities
+matplotlib
+tqdm
+requests

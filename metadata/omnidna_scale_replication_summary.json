@@ -1,0 +1,11 @@
+{
+  "models": [
+    "zehui127/Omni-DNA-20M",
+    "zehui127/Omni-DNA-116M"
+  ],
+  "same_frozen_structural_dataset": true,
+  "n_sources": 100,
+  "paths_per_source": 10,
+  "depth": 3,
+  "interpretation": "Increasing Omni-DNA scale substantially reduces absolute cosine distances, but does not restore the expected preference for protein-preserving biological equivalence. Both scales show chance-level local equivalence retrieval and no evidence that synonymous endpoint classes are tighter than matched nonsynonymous classes."
+}

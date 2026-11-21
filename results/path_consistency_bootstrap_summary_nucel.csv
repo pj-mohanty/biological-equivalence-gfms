@@ -1,0 +1,2 @@
+contrast,n_sources,paths_per_source,pairs_per_source_per_condition,mean_difference,median_difference,ci95_low,ci95_high,fraction_positive
+synonymous_minus_nonsynonymous_endpoint_dispersion,91,10,45,-2.3603977883400646e-05,-8.793671925862628e-06,-3.8905372986426725e-05,-1.0833064132848796e-05,0.23076923076923078
